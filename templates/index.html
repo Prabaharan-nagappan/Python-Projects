@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple To-Do List</title>
+    <title>Weather App</title>
 </head>
 <body>
-    <h1>My To-Do List</h1>
-    <ul>
-        {% for task in tasks %}
-            <li>{{ task }} <a href="{{ url_for('delete', task_id=loop.index0) }}">Delete</a></li>
-        {% endfor %}
-    </ul>
-    <form action="{{ url_for('add') }}" method="post">
-        <label for="task">Add Task:</label>
-        <input type="text" id="task" name="task" required>
-        <button type="submit">Add</button>
+    <h1>Weather App</h1>
+    <form method="post">
+        <label for="city">Enter City:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Get Weather</button>
     </form>
+
+    {% if weather_data %}
+        <h2>Weather in {{ weather_data.name }}, {{ weather_data.sys.country }}</h2>
+        <p>Temperature: {{ weather_data.main.temp }}°C</p>
+        <p>Weather: {{ weather_data.weather[0].description }}</p>
+        <p>Humidity: {{ weather_data.main.humidity }}%</p>
+        <p>Wind Speed: {{ weather_data.wind.speed }} m/s</p>
+    {% endif %}
 </body>
 </html>
