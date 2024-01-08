@@ -10,14 +10,13 @@ def index():
     if request.method == 'POST':
         latitude = request.form['latitude']
         longitude = request.form['longitude']
-        start_date = request.form['start_date']
-        end_date = request.form['end_date']
-        weather_data = get_weather_data(latitude, longitude, start_date, end_date)
+        past_days = request.form['past_days']
+        weather_data = get_weather_data(latitude, longitude, past_days)
 
-    return render_template('index.html', weather_data=weather_data)
+    return render_template('index.html', weather_data=weather_data, zip=zip)
 
-def get_weather_data(latitude, longitude, start_date, end_date):
-    api_url = f'https://archive-api.open-meteo.com/v1/era5?latitude={latitude}&longitude={longitude}&start_date={start_date}&end_date={end_date}&hourly=temperature_2m'
+def get_weather_data(latitude, longitude, past_days):
+    api_url = f'https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&past_days={past_days}&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m'
     
     response = requests.get(api_url)
     weather_data = response.json()
