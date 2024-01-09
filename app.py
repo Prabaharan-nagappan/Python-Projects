@@ -1,27 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask
 
 app = Flask(__name__)
 
-tasks = []
-
-
 @app.route('/')
-def index():
-    return render_template('index.html', tasks=tasks)
+def hello_world():
+    return 'Hello, World! this is sample website'
 
+@app.route('/about')
+def about():
+    return 'About page'
 
-@app.route('/add', methods=['POST'])
-def add():
-    task = request.form.get('task')
-    tasks.append(task)
-    return redirect(url_for('index'))
-
-
-@app.route('/delete/<int:task_id>')
-def delete(task_id):
-    if 0 <= task_id < len(tasks):
-        del tasks[task_id]
-    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
