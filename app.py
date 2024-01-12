@@ -22,5 +22,6 @@ def delete(task_id):
     return redirect(url_for('index'))
 
 
+
 if __name__ == '__main__':
     app.run(debug=True)
